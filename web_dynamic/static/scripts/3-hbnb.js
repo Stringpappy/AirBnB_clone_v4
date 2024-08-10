@@ -1,28 +1,32 @@
 // perform functions based on input checkbox
 $(function () {
-  let clicked = [];
-  let temp = [];
-  let text = [];
+  let selected = [];
+  let tempItems = [];
+  let displayNames = [];
+
   $(':checkbox').on('click', function () {
-    if (clicked.indexOf(this['dataset']['id']) === -1) {
-      clicked.push(this['dataset']['id']);
+    if (selected.indexOf(this['dataset']['id']) === -1) {
+      selected.push(this['dataset']['id']);
     } else {
-      for (let item of clicked) {
+      for (let item of selected) {
         if (item !== this['dataset']['id']) {
-          temp.push(item);
+          tempItems.push(item);
         }
       }
-      clicked = temp;
-      temp = [];
+      selected = tempItems;
+      tempItems = [];
     }
+
     for (let item of $('.popover li input')) {
-      if (clicked.indexOf(item['dataset']['id']) !== -1) {
-        text.push(item['dataset']['name']);
+      if (selected.indexOf(item['dataset']['id']) !== -1) {
+        displayNames.push(item['dataset']['name']);
       }
     }
-    $('.amenities h4').text(text.join(', '));
-    text = [];
-    if (clicked.length === 0) {
+
+    $('.amenities h4').text(displayNames.join(', '));
+    displayNames = [];
+
+    if (selected.length === 0) {
       $('.amenities h4').html('&nbsp;');
     }
   });
