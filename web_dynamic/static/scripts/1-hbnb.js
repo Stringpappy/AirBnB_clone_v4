@@ -1,31 +1,36 @@
-// perform functions based on input checkbox
+// Func that perform functions based on input checkbox
 $(function () {
-  let clicked = [];
-  let temp = [];
-  let text = [];
+  let selectedItems = [];
+  let filteredItems = [];
+  let displayText = [];
+  
   $(':checkbox').on('click', function () {
     console.log();
-    if (clicked.indexOf(this['dataset']['id']) === -1) {
-      clicked.push(this['dataset']['id']);
+    if (selectedItems.indexOf(this['dataset']['id']) === -1) {
+      selectedItems.push(this['dataset']['id']);
     } else {
-      for (let item of clicked) {
+      for (let item of selectedItems) {
         if (item !== this['dataset']['id']) {
-          temp.push(item);
+          filteredItems.push(item);
         }
       }
-      clicked = temp;
-      temp = [];
+      selectedItems = filteredItems;
+      filteredItems = [];
     }
-    for (let item of $('.popover li input')) {
-      if (clicked.indexOf(item['dataset']['id']) !== -1) {
+
+    for (let checkbox of $('.popover li input')) {
+      if (selectedItems.indexOf(checkbox['dataset']['id']) !== -1) {
         console.log('yay');
-        text.push(item['dataset']['name']);
+        displayText.push(checkbox['dataset']['name']);
       }
     }
-    $('.amenities h4').text(text.join(', '));
-    text = [];
-    if (clicked.length === 0) {
+
+    $('.amenities h4').text(displayText.join(', '));
+    displayText = [];
+
+    if (selectedItems.length === 0) {
       $('.amenities h4').html('&nbsp;');
     }
   });
 });
+
